@@ -14,7 +14,7 @@ var PageView = React.createClass({
       <li className={cssClass}>
         <Link {...this.props}
               to={this.props.location}
-              query={{page: this.props.page}}>
+              query={{ page: this.props.page }}>
           {this.props.page}
         </Link>
       </li>

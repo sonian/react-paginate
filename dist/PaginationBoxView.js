@@ -1,8 +1,11 @@
 'use strict';
 
 var React = require('react');
+var Router = require('react-router');
 var classNames = require('classnames');
 var PaginationListView = require('./PaginationListView');
+
+var Link = Router.Link;
 
 var PaginationBoxView = React.createClass({
   displayName: 'PaginationBoxView',
@@ -84,8 +87,8 @@ var PaginationBoxView = React.createClass({
         'li',
         { onClick: this.handlePreviousPage, className: previousClasses },
         React.createElement(
-          'a',
-          { href: '' },
+          Link,
+          { query: { page: this.state.selected }, to: location.pathname },
           this.props.previousLabel
         )
       ),
@@ -103,8 +106,8 @@ var PaginationBoxView = React.createClass({
         'li',
         { onClick: this.handleNextPage, className: nextClasses },
         React.createElement(
-          'a',
-          { href: '' },
+          Link,
+          { query: { page: this.state.selected + 2 }, to: location.pathname },
           this.props.nextLabel
         )
       )
