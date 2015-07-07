@@ -1,6 +1,9 @@
 'use strict';
 
-var React = require('react');
+var React  = require('react');
+var Router = require('react-router');
+
+var Link = Router.Link
 
 var PageView = React.createClass({
   render: function() {
@@ -8,9 +11,13 @@ var PageView = React.createClass({
       var cssClass = this.props.activeClass || 'selected';
     }
     return (
-        <li className={cssClass}>
-            <a {...this.props} href="">{this.props.page}</a>
-        </li>
+      <li className={cssClass}>
+        <Link {...this.props}
+              to={this.props.location}
+              query={{page: this.props.page}}>
+          {this.props.page}
+        </Link>
+      </li>
     );
   }
 });
