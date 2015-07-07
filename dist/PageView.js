@@ -11,7 +11,6 @@ var PageView = React.createClass({
   displayName: 'PageView',
 
   render: function render() {
-    console.log(this.props);
     if (this.props.selected) {
       var cssClass = this.props.activeClass || 'selected';
     }

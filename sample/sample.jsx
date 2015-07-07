@@ -3,9 +3,10 @@
 var React         = require('react');
 var ReactPaginate = require('./../react_components/react-paginate');
 var $             = require('jquery');
+var Router        = require('react-router');
+var Route         = Router.Route
 
 window.React = React;
-
 
 var CommentList = React.createClass({
   render: function() {
@@ -28,8 +29,8 @@ var App = React.createClass({
 
   loadCommentsFromServer: function() {
     $.ajax({
-      url      : this.props.url,
-      data     : {limit: this.props.perPage, offset: this.state.offset},
+      url      : 'http://localhost:3000/comments',
+      data     : {limit: 10, offset: this.state.offset},
       dataType : 'json',
       type     : 'GET',
 
@@ -38,14 +39,14 @@ var App = React.createClass({
       }.bind(this),
 
       error: function(xhr, status, err) {
-        console.error(this.props.url, status, err.toString());
+        console.error('http://localhost:3000/comments', status, err.toString());
       }.bind(this)
     });
   },
 
   handlePageClick: function(data) {
     var selected = data.selected;
-    var offset = Math.ceil(selected * this.props.perPage);
+    var offset = Math.ceil(selected * 10);
 
     this.setState({offset: offset}, function() {
       this.loadCommentsFromServer();
@@ -75,15 +76,29 @@ var App = React.createClass({
                        clickCallback={this.handlePageClick}
                        containerClassName={"pagination"}
                        subContainerClassName={"pages pagination"}
-                       activeClass={"active"} />
+                       activeClass={"active"}
+                       location={location.pathname} />
       </div>
     );
   }
 });
 
-React.render(
-  <App url={'http://localhost:3000/comments'}
-       author={'adele'}
-       perPage={10} />,
-  document.getElementById('react-paginate')
+var routes = (
+  <Route handler={AppContainer}>
+    <Route path="/" handler={App}/>
+  </Route>
 );
+
+var AppContainer = React.createClass({
+  render () {
+    return (
+      <div>
+        <RouteHandler />
+      </div>
+    );
+  }
+});
+
+Router.run(routes, function (Root) {
+  React.render(<Root />, document.getElementById('react-paginate'));
+});
