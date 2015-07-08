@@ -44,7 +44,7 @@ var PaginationBoxView = React.createClass({
   },
 
   handlePageSelected: function handlePageSelected(selected, event) {
-    //    event.preventDefault();
+    // event.preventDefault();
 
     if (this.state.selected === selected) return;
 
@@ -117,6 +117,9 @@ var PaginationBoxView = React.createClass({
   componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
     if (typeof nextProps.forceSelected !== 'undefined' && nextProps.forceSelected !== this.state.selected) {
       this.setState({ selected: nextProps.forceSelected });
+    }
+    if (typeof nextProps.initialSelected !== 'undefined' && nextProps.initialSelected !== null && nextProps.initialSelected !== this.state.selected) {
+      this.setState({ selected: nextProps.initialSelected });
     }
   }
 });
