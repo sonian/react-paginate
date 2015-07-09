@@ -23,7 +23,8 @@ var PaginationBoxView = React.createClass({
     containerClassName: React.PropTypes.string,
     subContainerClassName: React.PropTypes.string,
     activeClass: React.PropTypes.string,
-    location: React.PropTypes.string
+    location: React.PropTypes.string,
+    limit: React.PropTypes.number
   },
 
   getDefaultProps: function getDefaultProps() {
@@ -80,6 +81,16 @@ var PaginationBoxView = React.createClass({
       'disabled': this.state.selected === this.props.pageNum - 1
     });
 
+    var previousQuery = {
+      page: this.state.selected,
+      limit: this.props.limit
+    };
+
+    var nextQuery = {
+      page: this.state.selected + 2,
+      limit: this.props.limit
+    };
+
     return React.createElement(
       'ul',
       { className: this.props.containerClassName },
@@ -88,7 +99,7 @@ var PaginationBoxView = React.createClass({
         { onClick: this.handlePreviousPage, className: previousClasses },
         React.createElement(
           Link,
-          { query: { page: this.state.selected }, to: location.pathname },
+          { query: previousQuery, to: location.pathname },
           this.props.previousLabel
         )
       ),
@@ -101,13 +112,14 @@ var PaginationBoxView = React.createClass({
         breakLabel: this.props.breakLabel,
         subContainerClassName: this.props.subContainerClassName,
         activeClass: this.props.activeClass,
-        location: this.props.location }),
+        location: this.props.location,
+        limit: this.props.limit }),
       React.createElement(
         'li',
         { onClick: this.handleNextPage, className: nextClasses },
         React.createElement(
           Link,
-          { query: { page: this.state.selected + 2 }, to: location.pathname },
+          { query: nextQuery, to: location.pathname },
           this.props.nextLabel
         )
       )

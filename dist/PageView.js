@@ -14,6 +14,12 @@ var PageView = React.createClass({
     if (this.props.selected) {
       var cssClass = this.props.activeClass || 'selected';
     }
+
+    var query = {
+      page: this.props.page,
+      limit: this.props.limit
+    };
+
     return React.createElement(
       'li',
       { className: cssClass },
@@ -21,7 +27,7 @@ var PageView = React.createClass({
         Link,
         _extends({}, this.props, {
           to: this.props.location,
-          query: { page: this.props.page } }),
+          query: query }),
         this.props.page
       )
     );

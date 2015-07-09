@@ -77,7 +77,8 @@ var App = React.createClass({
                        containerClassName={"pagination"}
                        subContainerClassName={"pages pagination"}
                        activeClass={"active"}
-                       location={location.pathname} />
+                       location={location.pathname}
+                       limit={20} />
       </div>
     );
   }

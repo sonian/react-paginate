@@ -10,11 +10,17 @@ var PageView = React.createClass({
     if (this.props.selected) {
       var cssClass = this.props.activeClass || 'selected';
     }
+
+    var query = {
+      page: this.props.page,
+      limit: this.props.limit
+    }
+
     return (
       <li className={cssClass}>
         <Link {...this.props}
               to={this.props.location}
-              query={{ page: this.props.page }}>
+              query={query}>
           {this.props.page}
         </Link>
       </li>
