@@ -93,12 +93,6 @@ var PaginationBoxView = React.createClass({
 
     return (
       <ul className={this.props.containerClassName}>
-        <li onClick={this.handlePreviousPage} className={previousClasses}>
-          <Link query={previousQuery} to={location.pathname}>
-            {this.props.previousLabel}
-          </Link>
-        </li>
-
         <PaginationListView
           onPageSelected={this.handlePageSelected}
           selected={this.state.selected}
@@ -111,11 +105,19 @@ var PaginationBoxView = React.createClass({
           location={this.props.location}
           limit={this.props.limit} />
 
-        <li onClick={this.handleNextPage} className={nextClasses}>
-          <Link query={nextQuery} to={location.pathname}>
+        <ul>
+          <li onClick={this.handlePreviousPage} className={previousClasses}>
+            <Link query={previousQuery} to={location.pathname}>
+            {this.props.previousLabel}
+            </Link>
+          </li>
+
+          <li onClick={this.handleNextPage} className={nextClasses}>
+            <Link query={nextQuery} to={location.pathname}>
             {this.props.nextLabel}
-          </Link>
-        </li>
+            </Link>
+          </li>
+        </ul>
       </ul>
     );
   },
