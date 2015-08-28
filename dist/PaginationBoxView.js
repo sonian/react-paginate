@@ -70,27 +70,63 @@ var PaginationBoxView = React.createClass({
     }
   },
 
-  render: function render() {
+  prevButton: function prevButton() {
     var previousClasses = classNames({
       'previous': true,
       'disabled': this.state.selected === 0
     });
-
-    var nextClasses = classNames({
-      'next': true,
-      'disabled': this.state.selected === this.props.pageNum - 1
-    });
-
     var previousQuery = {
       page: this.state.selected,
       limit: this.props.limit
     };
 
+    if (this.state.selected === 0) {
+      return React.createElement(
+        'li',
+        { className: previousClasses },
+        this.props.previousLabel
+      );
+    }
+    return React.createElement(
+      'li',
+      { onClick: this.handlePreviousPage, className: previousClasses },
+      React.createElement(
+        Link,
+        { query: previousQuery, to: location.pathname },
+        this.props.previousLabel
+      )
+    );
+  },
+
+  nextButton: function nextButton() {
+    var nextClasses = classNames({
+      'next': true,
+      'disabled': this.state.selected === this.props.pageNum - 1
+    });
     var nextQuery = {
       page: this.state.selected + 2,
       limit: this.props.limit
     };
 
+    if (this.state.selected === this.props.pageNum - 1) {
+      return React.createElement(
+        'li',
+        { className: nextClasses },
+        this.props.nextLabel
+      );
+    }
+    return React.createElement(
+      'li',
+      { onClick: this.handleNextPage, className: nextClasses },
+      React.createElement(
+        Link,
+        { query: nextQuery, to: location.pathname },
+        this.props.nextLabel
+      )
+    );
+  },
+
+  render: function render() {
     return React.createElement(
       'ul',
       { className: this.props.containerClassName },
@@ -108,24 +144,8 @@ var PaginationBoxView = React.createClass({
       React.createElement(
         'ul',
         null,
-        React.createElement(
-          'li',
-          { onClick: this.handlePreviousPage, className: previousClasses },
-          React.createElement(
-            Link,
-            { query: previousQuery, to: location.pathname },
-            this.props.previousLabel
-          )
-        ),
-        React.createElement(
-          'li',
-          { onClick: this.handleNextPage, className: nextClasses },
-          React.createElement(
-            Link,
-            { query: nextQuery, to: location.pathname },
-            this.props.nextLabel
-          )
-        )
+        this.prevButton(),
+        this.nextButton()
       )
     );
   },

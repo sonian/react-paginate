@@ -70,27 +70,59 @@ var PaginationBoxView = React.createClass({
     }
   },
 
-  render: function() {
+  prevButton: function() {
     var previousClasses = classNames({
       'previous': true,
       'disabled': this.state.selected === 0
     });
-
-    var nextClasses = classNames({
-      'next': true,
-      'disabled': this.state.selected === this.props.pageNum - 1
-    });
-
     var previousQuery = {
       page: this.state.selected,
       limit: this.props.limit
     };
 
+    if (this.state.selected === 0) {
+      return (
+        <li className={previousClasses}>
+          {this.props.previousLabel}
+        </li>
+      );
+    }
+    return (
+      <li onClick={this.handlePreviousPage} className={previousClasses}>
+        <Link query={previousQuery} to={location.pathname}>
+          {this.props.previousLabel}
+        </Link>
+      </li>
+    );
+  },
+
+  nextButton: function() {
+    var nextClasses = classNames({
+      'next': true,
+      'disabled': this.state.selected === this.props.pageNum - 1
+    });
     var nextQuery = {
       page: this.state.selected + 2,
       limit: this.props.limit
     };
 
+    if (this.state.selected === (this.props.pageNum - 1)) {
+      return (
+        <li className={nextClasses}>
+          {this.props.nextLabel}
+        </li>
+      );
+    }
+    return (
+      <li onClick={this.handleNextPage} className={nextClasses}>
+        <Link query={nextQuery} to={location.pathname}>
+          {this.props.nextLabel}
+        </Link>
+      </li>
+    );
+  },
+
+  render: function() {
     return (
       <ul className={this.props.containerClassName}>
         <PaginationListView
@@ -106,17 +138,8 @@ var PaginationBoxView = React.createClass({
           limit={this.props.limit} />
 
         <ul>
-          <li onClick={this.handlePreviousPage} className={previousClasses}>
-            <Link query={previousQuery} to={location.pathname}>
-            {this.props.previousLabel}
-            </Link>
-          </li>
-
-          <li onClick={this.handleNextPage} className={nextClasses}>
-            <Link query={nextQuery} to={location.pathname}>
-            {this.props.nextLabel}
-            </Link>
-          </li>
+          {this.prevButton()}
+          {this.nextButton()}
         </ul>
       </ul>
     );
