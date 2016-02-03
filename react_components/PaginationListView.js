@@ -14,6 +14,7 @@ var PaginationListView = React.createClass({
         return (
           <PageView
             onClick={this.props.onPageSelected.bind(null, page)}
+            generateLinkFor={this.props.generateLinkFor}
             selected={this.props.selected === page}
             activeClass={this.props.activeClass}
             page={page + 1}
@@ -50,6 +51,7 @@ var PaginationListView = React.createClass({
         var pageView = (
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
+            generateLinkFor={this.props.generateLinkFor}
             selected={this.props.selected === index}
             activeClass={this.props.activeClass}
             page={index + 1}

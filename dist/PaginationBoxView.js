@@ -1,11 +1,8 @@
 'use strict';
 
 var React = require('react');
-var Router = require('react-router');
 var classNames = require('classnames');
 var PaginationListView = require('./PaginationListView');
-
-var Link = Router.Link;
 
 var PaginationBoxView = React.createClass({
   displayName: 'PaginationBoxView',
@@ -17,6 +14,7 @@ var PaginationBoxView = React.createClass({
     previousLabel: React.PropTypes.node,
     nextLabel: React.PropTypes.node,
     breakLabel: React.PropTypes.node,
+    generateLinkFor: React.PropTypes.func.isRequired,
     clickCallback: React.PropTypes.func,
     initialSelected: React.PropTypes.number,
     forceSelected: React.PropTypes.number,
@@ -90,11 +88,7 @@ var PaginationBoxView = React.createClass({
     return React.createElement(
       'li',
       { onClick: this.handlePreviousPage, className: previousClasses },
-      React.createElement(
-        Link,
-        { query: previousQuery, to: location.pathname },
-        this.props.previousLabel
-      )
+      this.props.generateLinkFor({ query: previousQuery, to: location.pathname }, this.props.previousLabel)
     );
   },
 
@@ -118,11 +112,7 @@ var PaginationBoxView = React.createClass({
     return React.createElement(
       'li',
       { onClick: this.handleNextPage, className: nextClasses },
-      React.createElement(
-        Link,
-        { query: nextQuery, to: location.pathname },
-        this.props.nextLabel
-      )
+      this.props.generateLinkFor({ query: nextQuery, to: location.pathname }, this.props.nextLabel)
     );
   },
 
@@ -136,6 +126,7 @@ var PaginationBoxView = React.createClass({
         pageNum: this.props.pageNum,
         pageRangeDisplayed: this.props.pageRangeDisplayed,
         marginPagesDisplayed: this.props.marginPagesDisplayed,
+        generateLinkFor: this.props.generateLinkFor,
         breakLabel: this.props.breakLabel,
         subContainerClassName: this.props.subContainerClassName,
         activeClass: this.props.activeClass,
