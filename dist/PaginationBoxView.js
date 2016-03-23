@@ -1,8 +1,11 @@
 'use strict';
 
 var React = require('react');
+var Router = require('react-router');
 var classNames = require('classnames');
 var PaginationListView = require('./PaginationListView');
+
+var Link = Router.Link;
 
 var PaginationBoxView = React.createClass({
   displayName: 'PaginationBoxView',
@@ -14,7 +17,6 @@ var PaginationBoxView = React.createClass({
     previousLabel: React.PropTypes.node,
     nextLabel: React.PropTypes.node,
     breakLabel: React.PropTypes.node,
-    generateLinkFor: React.PropTypes.func.isRequired,
     clickCallback: React.PropTypes.func,
     initialSelected: React.PropTypes.number,
     forceSelected: React.PropTypes.number,
@@ -30,9 +32,9 @@ var PaginationBoxView = React.createClass({
       pageNum: 10,
       pageRangeDisplayed: 2,
       marginPagesDisplayed: 3,
-      previousLabel: 'Previous',
-      nextLabel: 'Next',
-      breakLabel: '...'
+      previousLabel: "Previous",
+      nextLabel: "Next",
+      breakLabel: "..."
     };
   },
 
@@ -49,7 +51,7 @@ var PaginationBoxView = React.createClass({
 
     this.setState({ selected: selected });
 
-    if (typeof this.props.clickCallback !== 'undefined' && typeof this.props.clickCallback === 'function') {
+    if (typeof this.props.clickCallback !== "undefined" && typeof this.props.clickCallback === "function") {
       this.props.clickCallback({ selected: selected });
     }
   },
@@ -88,7 +90,11 @@ var PaginationBoxView = React.createClass({
     return React.createElement(
       'li',
       { onClick: this.handlePreviousPage, className: previousClasses },
-      this.props.generateLinkFor({ query: previousQuery, pathname: location.pathname }, this.props.previousLabel)
+      React.createElement(
+        Link,
+        { to: { pathname: location.pathname, query: previousQuery } },
+        this.props.previousLabel
+      )
     );
   },
 
@@ -112,7 +118,11 @@ var PaginationBoxView = React.createClass({
     return React.createElement(
       'li',
       { onClick: this.handleNextPage, className: nextClasses },
-      this.props.generateLinkFor({ query: nextQuery, pathname: location.pathname }, this.props.nextLabel)
+      React.createElement(
+        Link,
+        { to: { pathname: location.pathname, query: nextQuery } },
+        this.props.nextLabel
+      )
     );
   },
 
@@ -126,7 +136,6 @@ var PaginationBoxView = React.createClass({
         pageNum: this.props.pageNum,
         pageRangeDisplayed: this.props.pageRangeDisplayed,
         marginPagesDisplayed: this.props.marginPagesDisplayed,
-        generateLinkFor: this.props.generateLinkFor,
         breakLabel: this.props.breakLabel,
         subContainerClassName: this.props.subContainerClassName,
         activeClass: this.props.activeClass,
