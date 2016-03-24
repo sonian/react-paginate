@@ -1,8 +1,10 @@
 'use strict';
 
 var _        = require('underscore');
-var React    = require('react/addons');
+var React    = require('react');
 var PageView = require('./PageView');
+
+var createFragment = require('react-addons-create-fragment');
 
 var PaginationListView = React.createClass({
   render: function() {
@@ -86,7 +88,7 @@ var PaginationListView = React.createClass({
 
     return (
       <ul className={this.props.subContainerClassName}>
-        {React.addons.createFragment(items)}
+        {createFragment(items)}
       </ul>
     );
   }
