@@ -26,8 +26,7 @@ var PageView = React.createClass({
       React.createElement(
         Link,
         _extends({}, this.props, {
-          to: this.props.location,
-          query: query }),
+          to: { pathname: this.props.location, query: query } }),
         this.props.page
       )
     );

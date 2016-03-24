@@ -89,7 +89,7 @@ var PaginationBoxView = React.createClass({
     }
     return (
       <li onClick={this.handlePreviousPage} className={previousClasses}>
-        <Link query={previousQuery} to={location.pathname}>
+        <Link to={{ pathname: location.pathname, query: previousQuery }}>
           {this.props.previousLabel}
         </Link>
       </li>
@@ -115,7 +115,7 @@ var PaginationBoxView = React.createClass({
     }
     return (
       <li onClick={this.handleNextPage} className={nextClasses}>
-        <Link query={nextQuery} to={location.pathname}>
+        <Link to={{ pathname: location.pathname, query: nextQuery }}>
           {this.props.nextLabel}
         </Link>
       </li>
