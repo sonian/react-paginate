@@ -125,6 +125,7 @@ var PaginationBoxView = React.createClass({
   render: function() {
     return (
       <ul className={this.props.containerClassName}>
+        {this.prevButton()}
         <PaginationListView
           onPageSelected={this.handlePageSelected}
           selected={this.state.selected}
@@ -135,12 +136,9 @@ var PaginationBoxView = React.createClass({
           subContainerClassName={this.props.subContainerClassName}
           activeClass={this.props.activeClass}
           location={this.props.location}
-          limit={this.props.limit} />
-
-        <ul>
-          {this.prevButton()}
-          {this.nextButton()}
-        </ul>
+          limit={this.props.limit}
+        />
+        {this.nextButton()}
       </ul>
     );
   },
