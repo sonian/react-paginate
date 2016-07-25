@@ -128,7 +128,7 @@ var PaginationBoxView = React.createClass({
 
   render: function render() {
     return React.createElement(
-      'div',
+      'ul',
       { className: this.props.containerClassName },
       this.prevButton(),
       React.createElement(PaginationListView, {
