@@ -1,79 +1,12 @@
 'use strict';
 
-var _ = require('underscore');
-var React = require('react');
-var classNames = require('classnames');
-var Router = require('react-router');
-var Link = Router.Link
-var createFragment = require('react-addons-create-fragment');
-
+var _        = require('underscore');
+var React    = require('react');
 var PageView = require('./PageView');
 
+var createFragment = require('react-addons-create-fragment');
+
 var PaginationListView = React.createClass({
-  handlePreviousPage: function(event) {
-    event.preventDefault();
-    if (this.state.selected > 0) {
-      this.handlePageSelected(this.state.selected - 1, event);
-    }
-  },
-
-  handleNextPage: function(event) {
-    event.preventDefault();
-    if (this.state.selected < this.props.pageNum - 1) {
-      this.handlePageSelected(this.state.selected + 1, event);
-    }
-  },
-  prevButton: function() {
-    var previousClasses = classNames({
-      'previous': true,
-      'disabled': this.state.selected === 0
-    });
-    var previousQuery = {
-      page: this.state.selected,
-      limit: this.props.limit
-    };
-
-    if (this.state.selected === 0) {
-      return (
-        <li className={previousClasses}>
-          {this.props.previousLabel}
-        </li>
-      );
-    }
-    return (
-      <li onClick={this.handlePreviousPage} className={previousClasses}>
-        <Link to={{ pathname: location.pathname, query: previousQuery }}>
-          {this.props.previousLabel}
-        </Link>
-      </li>
-    );
-  },
-
-  nextButton: function() {
-    var nextClasses = classNames({
-      'next': true,
-      'disabled': this.state.selected === this.props.pageNum - 1
-    });
-    var nextQuery = {
-      page: this.state.selected + 2,
-      limit: this.props.limit
-    };
-
-    if (this.state.selected === (this.props.pageNum - 1)) {
-      return (
-        <li className={nextClasses}>
-          {this.props.nextLabel}
-        </li>
-      );
-    }
-    return (
-      <li onClick={this.handleNextPage} className={nextClasses}>
-        <Link to={{ pathname: location.pathname, query: nextQuery }}>
-          {this.props.nextLabel}
-        </Link>
-      </li>
-    );
-  },
   render: function() {
     var items = {};
 
@@ -153,9 +86,7 @@ var PaginationListView = React.createClass({
 
     return (
       <ul className={this.props.subContainerClassName}>
-        {this.prevButton()}
         {createFragment(items)}
-        {this.nextButton()}
       </ul>
     );
   }

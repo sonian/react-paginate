@@ -1,7 +1,11 @@
 'use strict';
 
 var React              = require('react');
+var Router             = require('react-router');
+var classNames         = require('classnames');
 var PaginationListView = require('./PaginationListView');
+
+var Link = Router.Link
 
 var PaginationBoxView = React.createClass({
 
@@ -52,9 +56,76 @@ var PaginationBoxView = React.createClass({
     }
   },
 
+  handlePreviousPage: function(event) {
+    event.preventDefault();
+    if (this.state.selected > 0) {
+      this.handlePageSelected(this.state.selected - 1, event);
+    }
+  },
+
+  handleNextPage: function(event) {
+    event.preventDefault();
+    if (this.state.selected < this.props.pageNum - 1) {
+      this.handlePageSelected(this.state.selected + 1, event);
+    }
+  },
+
+  prevButton: function() {
+    var previousClasses = classNames({
+      'previous': true,
+      'disabled': this.state.selected === 0
+    });
+    var previousQuery = {
+      page: this.state.selected,
+      limit: this.props.limit
+    };
+
+    if (this.state.selected === 0) {
+      return (
+        <li className={previousClasses}>
+          {this.props.previousLabel}
+        </li>
+      );
+    }
+    return (
+      <li onClick={this.handlePreviousPage} className={previousClasses}>
+        <Link to={{ pathname: location.pathname, query: previousQuery }}>
+          {this.props.previousLabel}
+        </Link>
+      </li>
+    );
+  },
+
+  nextButton: function() {
+    var nextClasses = classNames({
+      'next': true,
+      'disabled': this.state.selected === this.props.pageNum - 1
+    });
+    var nextQuery = {
+      page: this.state.selected + 2,
+      limit: this.props.limit
+    };
+
+    if (this.state.selected === (this.props.pageNum - 1)) {
+      return (
+        <li className={nextClasses}>
+          {this.props.nextLabel}
+        </li>
+      );
+    }
+    return (
+      <li onClick={this.handleNextPage} className={nextClasses}>
+        <Link to={{ pathname: location.pathname, query: nextQuery }}>
+          {this.props.nextLabel}
+        </Link>
+      </li>
+    );
+  },
+
   render: function() {
     return (
       <div className={this.props.containerClassName}>
+        {this.prevButton()}
         <PaginationListView
           onPageSelected={this.handlePageSelected}
           selected={this.state.selected}
@@ -67,6 +138,7 @@ var PaginationBoxView = React.createClass({
           location={this.props.location}
           limit={this.props.limit}
         />
+        {this.nextButton()}
       </div>
     );
   },
