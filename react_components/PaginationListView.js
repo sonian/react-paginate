@@ -10,6 +10,19 @@ var createFragment = require('react-addons-create-fragment');
 var PageView = require('./PageView');
 
 var PaginationListView = React.createClass({
+  handlePreviousPage: function(event) {
+    event.preventDefault();
+    if (this.state.selected > 0) {
+      this.handlePageSelected(this.state.selected - 1, event);
+    }
+  },
+
+  handleNextPage: function(event) {
+    event.preventDefault();
+    if (this.state.selected < this.props.pageNum - 1) {
+      this.handlePageSelected(this.state.selected + 1, event);
+    }
+  },
   prevButton: function() {
     var previousClasses = classNames({
       'previous': true,
@@ -106,7 +119,6 @@ var PaginationListView = React.createClass({
         var pageView = (
           <PageView
             onClick={this.props.onPageSelected.bind(null, index)}
-            generateLinkFor={this.props.generateLinkFor}
             selected={this.props.selected === index}
             activeClass={this.props.activeClass}
             page={index + 1}

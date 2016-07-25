@@ -52,20 +52,6 @@ var PaginationBoxView = React.createClass({
     }
   },
 
-  handlePreviousPage: function(event) {
-    event.preventDefault();
-    if (this.state.selected > 0) {
-      this.handlePageSelected(this.state.selected - 1, event);
-    }
-  },
-
-  handleNextPage: function(event) {
-    event.preventDefault();
-    if (this.state.selected < this.props.pageNum - 1) {
-      this.handlePageSelected(this.state.selected + 1, event);
-    }
-  },
-
   render: function() {
     return (
       <div className={this.props.containerClassName}>

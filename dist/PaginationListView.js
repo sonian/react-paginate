@@ -12,6 +12,19 @@ var PageView = require('./PageView');
 var PaginationListView = React.createClass({
   displayName: 'PaginationListView',
 
+  handlePreviousPage: function handlePreviousPage(event) {
+    event.preventDefault();
+    if (this.state.selected > 0) {
+      this.handlePageSelected(this.state.selected - 1, event);
+    }
+  },
+
+  handleNextPage: function handleNextPage(event) {
+    event.preventDefault();
+    if (this.state.selected < this.props.pageNum - 1) {
+      this.handlePageSelected(this.state.selected + 1, event);
+    }
+  },
   prevButton: function prevButton() {
     var previousClasses = classNames({
       'previous': true,
@@ -107,7 +120,6 @@ var PaginationListView = React.createClass({
 
         var pageView = React.createElement(PageView, {
           onClick: this.props.onPageSelected.bind(null, index),
-          generateLinkFor: this.props.generateLinkFor,
           selected: this.props.selected === index,
           activeClass: this.props.activeClass,
           page: index + 1,
