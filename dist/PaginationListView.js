@@ -2,13 +2,70 @@
 
 var _ = require('underscore');
 var React = require('react');
-var PageView = require('./PageView');
-
+var Router = require('react-router');
+var Link = Router.Link;
 var createFragment = require('react-addons-create-fragment');
+
+var PageView = require('./PageView');
 
 var PaginationListView = React.createClass({
   displayName: 'PaginationListView',
 
+  prevButton: function prevButton() {
+    var previousClasses = classNames({
+      'previous': true,
+      'disabled': this.state.selected === 0
+    });
+    var previousQuery = {
+      page: this.state.selected,
+      limit: this.props.limit
+    };
+
+    if (this.state.selected === 0) {
+      return React.createElement(
+        'li',
+        { className: previousClasses },
+        this.props.previousLabel
+      );
+    }
+    return React.createElement(
+      'li',
+      { onClick: this.handlePreviousPage, className: previousClasses },
+      React.createElement(
+        Link,
+        { to: { pathname: location.pathname, query: previousQuery } },
+        this.props.previousLabel
+      )
+    );
+  },
+
+  nextButton: function nextButton() {
+    var nextClasses = classNames({
+      'next': true,
+      'disabled': this.state.selected === this.props.pageNum - 1
+    });
+    var nextQuery = {
+      page: this.state.selected + 2,
+      limit: this.props.limit
+    };
+
+    if (this.state.selected === this.props.pageNum - 1) {
+      return React.createElement(
+        'li',
+        { className: nextClasses },
+        this.props.nextLabel
+      );
+    }
+    return React.createElement(
+      'li',
+      { onClick: this.handleNextPage, className: nextClasses },
+      React.createElement(
+        Link,
+        { to: { pathname: location.pathname, query: nextQuery } },
+        this.props.nextLabel
+      )
+    );
+  },
   render: function render() {
     var items = {};
 
@@ -85,7 +142,9 @@ var PaginationListView = React.createClass({
     return React.createElement(
       'ul',
       { className: this.props.subContainerClassName },
-      createFragment(items)
+      this.prevButton(),
+      createFragment(items),
+      this.nextButton()
     );
   }
 });

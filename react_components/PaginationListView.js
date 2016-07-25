@@ -2,9 +2,11 @@
 
 var _        = require('underscore');
 var React    = require('react');
-var PageView = require('./PageView');
-
+var Router   = require('react-router');
+var Link = Router.Link
 var createFragment = require('react-addons-create-fragment');
+
+var PageView = require('./PageView');
 
 var PaginationListView = React.createClass({
   prevButton: function() {

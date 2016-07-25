@@ -48,7 +48,8 @@
   },
   "peerDependencies": {},
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "gulp dist"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/preprocessor.js",

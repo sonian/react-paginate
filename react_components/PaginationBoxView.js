@@ -1,11 +1,8 @@
 'use strict';
 
 var React              = require('react');
-var Router             = require('react-router');
 var classNames         = require('classnames');
 var PaginationListView = require('./PaginationListView');
-
-var Link = Router.Link
 
 var PaginationBoxView = React.createClass({
 
