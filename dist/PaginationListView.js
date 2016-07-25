@@ -2,6 +2,7 @@
 
 var _ = require('underscore');
 var React = require('react');
+var classNames = require('classnames');
 var Router = require('react-router');
 var Link = Router.Link;
 var createFragment = require('react-addons-create-fragment');
@@ -74,7 +75,6 @@ var PaginationListView = React.createClass({
       var pageViews = _.range(0, this.props.pageNum).map((function (page) {
         return React.createElement(PageView, {
           onClick: this.props.onPageSelected.bind(null, page),
-          generateLinkFor: this.props.generateLinkFor,
           selected: this.props.selected === page,
           activeClass: this.props.activeClass,
           page: page + 1,

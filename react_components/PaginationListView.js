@@ -1,8 +1,9 @@
 'use strict';
 
-var _        = require('underscore');
-var React    = require('react');
-var Router   = require('react-router');
+var _ = require('underscore');
+var React = require('react');
+var classNames = require('classnames');
+var Router = require('react-router');
 var Link = Router.Link
 var createFragment = require('react-addons-create-fragment');
 
@@ -69,7 +70,6 @@ var PaginationListView = React.createClass({
         return (
           <PageView
             onClick={this.props.onPageSelected.bind(null, page)}
-            generateLinkFor={this.props.generateLinkFor}
             selected={this.props.selected === page}
             activeClass={this.props.activeClass}
             page={page + 1}
