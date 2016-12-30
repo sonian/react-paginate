@@ -4,6 +4,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var React = require('react');
 var Router = require('react-router');
+var omit = require('lodash/omit');
 
 var Link = Router.Link;
 
@@ -25,7 +26,7 @@ var PageView = React.createClass({
       { className: cssClass },
       React.createElement(
         Link,
-        _extends({}, this.props, {
+        _extends({}, omit(this.props, 'activeClass', 'page', 'location', 'limit'), {
           to: { pathname: this.props.location, query: query } }),
         this.props.page
       )
